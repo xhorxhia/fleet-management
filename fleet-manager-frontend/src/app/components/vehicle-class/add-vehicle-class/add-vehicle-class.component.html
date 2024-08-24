@@ -1,0 +1,41 @@
+<form  class="form" (ngSubmit)="SaveVehicleClass()">
+  <mat-form-field class="example-form-field">
+    <mat-label>Number of Axes</mat-label>
+    <input matInput type="number" name="axes" [(ngModel)]="vehicleClass.axes" [formControl]="axesFormControl" min="1" max="5" required>
+    <mat-error *ngIf="classFormControl.hasError('min')" >
+      Number of Axes must be greater than 0
+  </mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field class="example-form-field" >
+    <mat-label>Number of Class</mat-label>
+    <input matInput type="number" name="classNr"[formControl]="classFormControl"  [(ngModel)]="vehicleClass.classNr" min="1" max="6" required>
+    <mat-error *ngIf="classFormControl.hasError('min')" >
+      Number of Axes must be greater than 0
+    </mat-error>
+
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field >
+      <mat-label>Description</mat-label>
+      <input matInput type="textarea" autocomplete="class1" name="description" [(ngModel)]="vehicleClass.description">
+     
+    </mat-form-field>
+  
+  <br>
+  <br>
+ 
+  <input type="file"
+  name="selectedFile"
+  accept="image/*"
+  [(ngModel)]="vehicleClass.icon"
+  (change)="updateFile($event)"
+  required
+  >
+  <br>
+  <br>
+  <button  mat-raised-button color="warn" type="submit"><mat-icon>add</mat-icon> ADD VEHICLE</button>
+  
+</form>

@@ -1,0 +1,202 @@
+<mat-card-header style="margin-left: 3%">
+    <mat-icon>drive_eta
+      </mat-icon> VEHICLE DETAILS
+</mat-card-header>
+<mat-card  *ngIf="!toggle" class="row">
+    
+    <mat-card-header class="column left">
+     
+       
+      <ul>
+        <li>
+            <mat-card-title> ID:&nbsp;&nbsp;<span>{{vehicleDetail?.id}}</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+        <li>
+            <mat-card-title>Name:&nbsp;&nbsp;<span>{{vehicleDetail?.name}}</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+
+        <li>
+            <mat-card-title>CONSUM:&nbsp;&nbsp;<span>{{vehicleDetail?.consumption}}Liter</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+
+        <li>
+            <mat-card-title>Engine Power:&nbsp;&nbsp;<span>{{vehicleDetail?.enginePower}}HP</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+
+        <li>
+            <mat-card-title>Class Number:&nbsp;&nbsp;<span>{{className}}</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+
+        <li>
+            <mat-card-title>Fleet Name:&nbsp;&nbsp;<span>{{fleetName}}</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+
+        <li>
+            <mat-card-title>Company Name:&nbsp;&nbsp;<span>{{companyName}}</span></mat-card-title>
+
+        </li>
+        <mat-divider></mat-divider>
+
+        <li>
+            <mat-card-title>Capacity:&nbsp;&nbsp;<span>{{vehicleDetail?.maxCapacity}}Liter</span></mat-card-title>
+
+        </li>
+     
+      </ul>
+      
+
+    </mat-card-header>
+
+  <mat-card-header class="column right" >
+          <mat-card-title>    
+                <button mat-button (click)="showList()"><mat-icon>sort</mat-icon>Service</button>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="showlist" >  
+            <h4  *ngFor="let service of servicesList; let i=index">
+            <mat-icon>build</mat-icon> {{service.name}}
+            </h4>
+            </mat-card-subtitle>
+</mat-card-header>
+      
+  <mat-card-header class="column right" *ngIf="hideIssueTF" >
+    <mat-card-title>    
+         <mat-icon>bug_report</mat-icon>Issue
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="nIssue" >  
+      <h4  *ngFor="let service of issuesList; let i=index">
+      <mat-icon>bug_report</mat-icon> {{service.part}}   Satus:{{service.status}}
+      </h4>
+      </mat-card-subtitle>
+      <mat-card-subtitle *ngIf="onIssue" >  
+        {{oneIssue.part}}   Satus:{{oneIssue.status}}
+        </mat-card-subtitle>
+
+       
+  </mat-card-header>
+  <mat-card-header>
+    <mat-card-title>
+        <button mat-raised-button color="warn"  routerLink="/vehicleIssue">
+          <mat-icon>add</mat-icon>Issue
+        </button>
+    </mat-card-title>
+    
+  </mat-card-header>
+
+  
+  </mat-card>
+
+  <mat-card-actions *ngIf="!toggle" class="margin">
+      <button *ngIf="!isDriver" (click)="openDialog(deleteTemplate)" mat-raised-button color="warn">Delete</button>
+      <button *ngIf="!isDriver" (click)="editVehicle(editTemplate)" mat-raised-button color="orange">Edit</button> 
+      <button *ngIf="isDriver" mat-raised-button color="primary" [routerLink]="['/profile']">Back to profile</button>
+  </mat-card-actions>
+ 
+  
+ 
+  <ng-template #editTemplate>
+    <h1 style="text-align: center">Edit this vehicle
+        <mat-icon style="float: right;cursor: pointer"(click)="closeDialog()">close</mat-icon>
+    </h1>
+
+
+
+    <form  class="form" (ngSubmit)="UpdateVehicle(vehicleDetail.id)">
+      <mat-form-field class="example-form-field" style="margin-left:1%">
+          <mat-label>Name of vehicle</mat-label>
+          <input matInput type="text" name="name"  [formControl]="nameFormControl"  [(ngModel)]="vehicleDetail.name"
+          minlength="3"
+        maxlength="65"
+        required>
+         
+        </mat-form-field>
+    <br>
+    <br>
+   
+    
+    <mat-form-field class="example-form-field" style="margin-left:1%">
+      <mat-label>Consumption</mat-label>
+        <input matInput type="number" name="consumption"  [formControl]="consumptionFormControl" [(ngModel)]="vehicleDetail.consumption"
+        min="1"
+        max="20"
+        required>
+       
+      </mat-form-field>
+    
+    <br>
+    <br>
+    <mat-form-field class="example-form-field" style="margin-left:1%">
+      <mat-label>Maximum Capacity</mat-label>
+        <input matInput type="number" name="maxCapacity"
+         [(ngModel)]="vehicleDetail.maxCapacity" 
+         [formControl]="maxCapacityFormControl"min="10"
+         max="100"
+         required>
+       
+      </mat-form-field>
+    <br>
+    <br>
+    <mat-form-field class="example-form-field" style="margin-left:1%">
+      <mat-label>Engine Power</mat-label>
+        <input matInput type="number"  name="enginePower"
+        [formControl]="engineFormControl"
+         [(ngModel)]="vehicleDetail.enginePower"
+         min="25"
+      max="400"
+      required>
+        <br>
+  
+      </mat-form-field>
+      <mat-form-field  class="width" style="margin-left:1%" appearance="fill">
+          <mat-label>Services List</mat-label>
+                <mat-select [(ngModel)]="vehicleDetail.vehicleServicesId"   name="vehicle.vehicleServicesId" multiple >
+            <mat-option  *ngFor="let class of vehicleServices" [value]="class.id" >
+                 Service  {{class.name}}
+            </mat-option>
+         
+            <button mat-raised-button color="warn" (click)="closeDialog()" routerLink="/vehicleService">
+                <mat-icon>add</mat-icon>Service
+              </button>
+          
+          </mat-select>
+          </mat-form-field>
+        
+      <br>
+      <br>
+      <div class="margin">
+        <button mat-raised-button color="warn" type="submit">SAVE</button>
+      </div>
+   
+
+    </form>
+  </ng-template>
+  <ng-template #deleteTemplate>
+      <mat-dialog-content style="font-size: 16px">Are you sure you want to delete it?</mat-dialog-content>
+      <mat-dialog-actions style="justify-content: center">
+          <button color="warn" mat-button mat-dialog-close (click)="openDialogx2(forcedelete)" >Yes</button>
+          <button mat-button mat-dialog-close>No</button>
+      </mat-dialog-actions>
+  </ng-template>
+
+  <ng-template #forcedelete>
+    <mat-dialog-content style="font-size: 16px">If you delete the car, the car will be deleted by the fleet and the driver.</mat-dialog-content>
+    <mat-dialog-actions style="justify-content: center">
+        <button color="warn" mat-button mat-dialog-close (click)="DeleteVehicle(vehicleDetail.id)" >Yes</button>
+        <button mat-button mat-dialog-close>No</button>
+    </mat-dialog-actions>
+</ng-template>
+
+
+
+ 

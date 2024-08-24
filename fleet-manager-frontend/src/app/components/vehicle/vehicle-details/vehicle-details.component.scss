@@ -1,0 +1,52 @@
+  mat-card{
+    max-width: 70%;
+    height: max-content;
+    margin-left: 4%;
+  }
+  .margin{
+    margin-left: 44%;
+
+  }
+  
+  mat-form-field {
+    text-align: center;
+    // display: block;
+    margin-left: 40%;
+    width: 300px;
+}
+button{
+    text-align: center;
+
+}
+span{
+  padding: 6%
+}
+* {
+  box-sizing: border-box;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.left {
+  width: 65%;
+}
+
+.right {
+  width: 25%;
+
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+ul {
+  list-style-type: circle;
+}

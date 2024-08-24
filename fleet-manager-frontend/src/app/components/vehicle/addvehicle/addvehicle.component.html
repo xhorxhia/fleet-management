@@ -1,0 +1,92 @@
+<form  class="form" (ngSubmit)="saveNewVehicle()">
+  <mat-form-field >
+      <mat-label>Name of vehicle</mat-label>
+      <input matInput  [formControl]="nameFormControl" type="text" name="name" [(ngModel)]="vehicle.name"
+      minlength="3"
+      maxlength="65"
+      required>
+     
+    </mat-form-field>
+<br>
+<br>
+<mat-form-field class="width" appearance="fill">
+    <mat-label>Vehicle Class</mat-label>
+          <mat-select [(ngModel)]="vehicle.vehicleClassId"  *ngIf="show" name="vehicleClassId">
+      <mat-option  *ngFor="let class of vehicleClassHelper" [value]="class.id" >
+          Class   {{class.classNr}}
+      </mat-option>
+   
+
+    </mat-select>
+
+
+    <mat-select [(ngModel)]="vehicle.vehicleClassId"  *ngIf="show2" name="vehicleClassId">
+        <mat-option   [value]="VehicleClassId" >
+            Class   {{veicleHelper}}
+        </mat-option>
+      </mat-select>
+
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field class="width" appearance="fill">
+      <mat-label>Services List</mat-label>
+            <mat-select [(ngModel)]="vehicle.vehicleServicesId"   name="vehicle.vehicleServicesId" multiple >
+        <mat-option  *ngFor="let class of vehicleServices" [value]="class.id" >
+             Service  {{class.name}}
+        </mat-option>
+       
+        <button mat-raised-button color="warn"  routerLink="/vehicleService">
+          <mat-icon>add</mat-icon>Service
+        </button>
+     
+      
+      </mat-select>
+      </mat-form-field>
+
+
+
+     
+<br>
+<br>
+<mat-form-field class="example-form-field">
+    <mat-label>Consumption</mat-label>
+    <input matInput type="number" [formControl]="consumptionFormControl"   name="consumption" 
+    [(ngModel)]="vehicle.consumption"
+    min="1"
+    max="20"
+    required
+    >
+   
+  </mat-form-field>
+
+<br>
+<br>
+<mat-form-field class="example-form-field">
+    <mat-label>Maximum Capacity</mat-label>
+    <input matInput type="number" [formControl]="maxCapacityFormControl"  name="maxCapacity"
+    [(ngModel)]="vehicle.maxCapacity" 
+    min="10"
+    max="100"
+    required
+    >
+   
+  </mat-form-field>
+<br>
+<br>
+<mat-form-field class="example-form-field">
+    <mat-label>Engine Power</mat-label>
+    <input matInput type="number" [formControl]="engineFormControl"  name="enginePower" 
+    [(ngModel)]="vehicle.enginePower"
+    min="25"
+    max="400"
+    required>
+    <br>
+    
+
+  </mat-form-field>
+  <br>
+ 
+
+<button  mat-raised-button color="warn" type="submit"><mat-icon>add</mat-icon> ADD VEHICLE</button>
+</form>

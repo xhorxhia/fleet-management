@@ -1,0 +1,86 @@
+        <div *ngFor="let one of vehicleClasses" class="list" style="display:inline-block">
+
+          <mat-card class="example-card">
+              <mat-card-header>
+              <mat-card-title>  Axes: {{one.axes}}</mat-card-title>
+              <mat-card-title> Class: {{one.classNr}}</mat-card-title>
+
+              <img mat-card-sm-image style="margin-left: 1%;margin-right: 0.2%" class="mat-card-image " src={{one.icon}} alt="Photo of a Shiba Inu">
+              
+              </mat-card-header>
+              <mat-card-content>
+                <mat-card-title>
+                  Description:
+                  
+                </mat-card-title>
+                <p>
+                    {{one.description}}
+                  </p>
+              </mat-card-content>
+              <mat-card-actions >
+                <button mat-raised-button color="warn" (click)="openDialog(one)" >Delete</button>
+                <button  mat-raised-button color="primary" (click)="Update(one)" >Edit</button>
+
+                <button mat-button   [routerLink]="['AddVehicle/',one.id]" *ngIf="!isAdmin">Add vehicle</button>
+              </mat-card-actions>
+            </mat-card>
+          
+        
+      </div>
+
+      
+
+      <button mat-raised-button color="warn" *ngIf="isAdmin" routerLink="/vehicleClassAdd">ADD VEHICLE CLASS</button>
+
+      <ng-template #deleteTemplate>
+          <mat-dialog-content style="font-size: 16px">Are you sure you want to delete it?</mat-dialog-content>
+          <mat-dialog-actions style="justify-content: center">
+              <button color="warn" mat-button mat-dialog-close (click)="deleteVehicle(deletedVehicle.id)" >Yes</button>
+              <button mat-button mat-dialog-close>No</button>
+          </mat-dialog-actions>
+      </ng-template>
+
+
+
+
+
+
+      <ng-template #editTemplate>
+          <form style="width: 300px" class="form" >
+              <mat-form-field style="width: 100%" *ngIf="vehicleClass1" class="example-form-field">
+                <mat-label>Number of Axes</mat-label>
+                <input matInput type="number"  name="axes" [(ngModel)]="vehicleClass1.axes" min="1" max="5" required>
+                
+              </mat-form-field>
+              <br>
+              <br>
+              <mat-form-field    style="width: 100%"class="example-form-field" >
+                <mat-label>Number of Class</mat-label>
+                <input matInput type="number" name="classNr"  [(ngModel)]="vehicleClass1.classNr" min="1" max="6" required>
+               
+            
+              </mat-form-field>
+              <br>
+              <br>
+              <mat-form-field  style="width: 100%">
+                  <mat-label>Description</mat-label>
+                  <input matInput type="textarea" autocomplete="class1" name="description" [(ngModel)]="vehicleClass1.description">
+                 
+                </mat-form-field>
+              
+              <br>
+              <br>
+             
+            
+              <br>
+              <br>
+              <button  mat-raised-button color="warn"  matDialogClose="yes" ><mat-icon>edit</mat-icon>SAVE</button>
+              <button mat-button mat-dialog-close>No</button>
+
+              
+            </form>
+      </ng-template>
+
+
+
+      
